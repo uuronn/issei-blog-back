@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { CatsModule } from './cats/cats.module';
 import { CorsMiddleware } from './middleware/cors.middleware';
+import { BlogsModule } from './blogs/blogs.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { CorsMiddleware } from './middleware/cors.middleware';
       envFilePath: '.env',
     }),
     CatsModule,
+    BlogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
