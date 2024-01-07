@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Cat } from 'src/cats/cat.interface';
+import { db } from 'src/main';
 
 @Injectable()
 export class CatsService {
@@ -9,7 +10,15 @@ export class CatsService {
     this.cats.push(cat);
   }
 
-  findAll(): Cat[] {
+  async findAll(): Promise<Cat[]> {
+    const snapshots = await db.collection('test').get();
+
+    const test = snapshots.docs.map((doc) => {
+      return doc.data();
+    });
+
+    console.log('aaa', test);
+
     return this.cats;
   }
 }
