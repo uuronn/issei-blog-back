@@ -6,6 +6,13 @@ import { Blog } from 'src/shared/models/blogs';
 export class BlogsService {
   private blogs: Blog[] = [];
 
+  async createBlog() {
+    await db.collection('blogs').add({
+      title: 'Tokyo',
+      content: 'Japan',
+    } as Blog);
+  }
+
   async getBlogs() {
     const snapshots = await db.collection('blogs').get();
 
