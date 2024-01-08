@@ -13,6 +13,14 @@ export class BlogsService {
     } as Blog);
   }
 
+  async getBlog(blogId: string) {
+    const doc = await db.collection('blogs').doc(blogId).get();
+
+    console.log('snapshots', blogId);
+
+    return doc.data();
+  }
+
   async getBlogs() {
     const snapshots = await db.collection('blogs').get();
 
