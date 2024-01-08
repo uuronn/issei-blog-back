@@ -1,13 +1,15 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
+import { BlogDTO } from './blogs.dto';
 
 @Controller('blogs')
 export class BlogsController {
   constructor(private blogsService: BlogsService) {}
 
   @Post()
-  async createBlog() {
-    this.blogsService.createBlog();
+  async createBlog(@Body() blogDTO: BlogDTO) {
+    this.blogsService.createBlog(blogDTO);
+    return blogDTO;
   }
 
   @Get()
