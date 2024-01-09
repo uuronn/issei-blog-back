@@ -5,20 +5,25 @@ import { ServiceAccount } from 'firebase-admin';
 import { cert, initializeApp } from 'firebase-admin/app';
 import { Firestore, getFirestore } from 'firebase-admin/firestore';
 import { ValidationPipe } from '@nestjs/common';
+import { AuthInterceptor } from './app.interceptor';
 
 let db: Firestore;
+let AUTHORIZATION_KEY: string;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(new AuthInterceptor());
 
   app.enableCors({
     origin: '*',
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   });
 
   // Configの読み込み
   const configService: ConfigService = app.get(ConfigService);
+
+  AUTHORIZATION_KEY = configService.get<string>('AUTHORIZATION_KEY');
 
   // Configから読み込んだ値を指定してfirebase-admin用のConfigオブジェクトを作成
   const adminConfig: ServiceAccount = {
@@ -40,4 +45,4 @@ async function bootstrap() {
 
 bootstrap();
 
-export { db };
+export { db, AUTHORIZATION_KEY };
