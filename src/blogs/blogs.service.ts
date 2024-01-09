@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { db } from 'src/main';
+import { getServerTimestamp } from 'src/shared/firebase-admin/firestore';
 import { Blog } from 'src/shared/models/blogs';
 
 @Injectable()
@@ -7,7 +8,9 @@ export class BlogsService {
   private blogs: Blog[] = [];
 
   async createBlog(blog: Blog) {
-    await db.collection('blogs').add(blog);
+    const at = getServerTimestamp();
+
+    await db.collection('blogs').add({ ...blog, createdAt: at } as Blog);
   }
 
   async getBlog(blogId: string) {
@@ -19,9 +22,7 @@ export class BlogsService {
   async getBlogs() {
     const snapshots = await db.collection('blogs').get();
 
-    const blogs = snapshots.docs.map(
-      (doc) => ({ id: doc.id, ...doc.data() }) as Blog,
-    );
+    const blogs = snapshots.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Blog);
 
     this.blogs = blogs;
 

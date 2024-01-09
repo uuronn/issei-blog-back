@@ -23,9 +23,7 @@ async function bootstrap() {
   // Configから読み込んだ値を指定してfirebase-admin用のConfigオブジェクトを作成
   const adminConfig: ServiceAccount = {
     projectId: configService.get<string>('FIREBASE_PROJECT_ID'),
-    privateKey: configService
-      .get<string>('FIREBASE_PRIVATE_KEY')
-      .replace(/\\n/g, '\n'),
+    privateKey: configService.get<string>('FIREBASE_PRIVATE_KEY').replace(/\\n/g, '\n'),
     clientEmail: configService.get<string>('FIREBASE_CLIENT_EMAIL'),
   };
 
@@ -35,9 +33,9 @@ async function bootstrap() {
 
   db = getFirestore();
 
-  await app.listen(3000);
+  await app.listen(8000);
 
-  console.log('http://localhost:3000');
+  console.log('http://localhost:8000');
 }
 
 bootstrap();
