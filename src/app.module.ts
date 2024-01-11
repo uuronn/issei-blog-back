@@ -7,7 +7,6 @@ import { BlogsModule } from './blogs/blogs.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      // 参照する環境変数として.envを指定する
       envFilePath: '.env',
     }),
     BlogsModule,
