@@ -8,6 +8,7 @@ import { AuthInterceptor } from './app.interceptor';
 
 let db: Firestore;
 let AUTHORIZATION_KEY: string;
+let OWNER_EMAIL: string;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +24,7 @@ async function bootstrap() {
   const configService: ConfigService = app.get(ConfigService);
 
   AUTHORIZATION_KEY = configService.get<string>('AUTHORIZATION_KEY');
+  OWNER_EMAIL = configService.get<string>('OWNER_EMAIL');
 
   // Configから読み込んだ値を指定してfirebase-admin用のConfigオブジェクトを作成
   const adminConfig: ServiceAccount = {
@@ -44,4 +46,4 @@ async function bootstrap() {
 
 bootstrap();
 
-export { db, AUTHORIZATION_KEY };
+export { db, AUTHORIZATION_KEY, OWNER_EMAIL };

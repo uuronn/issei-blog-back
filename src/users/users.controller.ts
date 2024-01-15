@@ -7,10 +7,10 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post()
-  async createUser(@Body() body: UserDTO) {
-    const { userId } = body;
+  async createUser(@Body() body: UserDTO): Promise<string> {
+    const { userId, name, email } = body;
 
-    this.usersService.createUser(userId);
+    return this.usersService.createUser(userId, name, email);
   }
 
   @Get()
