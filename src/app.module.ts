@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { BlogsModule } from './blogs/blogs.module';
 import { UsersModule } from './users/users.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UsersModule } from './users/users.module';
     }),
     BlogsModule,
     UsersModule,
+    LikesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
