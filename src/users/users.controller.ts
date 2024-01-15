@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDTO } from './users.dto';
 
@@ -14,9 +14,7 @@ export class UsersController {
   }
 
   @Get()
-  async getUser(@Body() body: UserDTO) {
-    const { userId } = body;
-
+  async getUser(@Query('userId') userId: string) {
     return this.usersService.getUser(userId);
   }
 }
