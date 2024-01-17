@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { db } from 'src/main';
+import { database, db } from 'src/main';
 import { getServerTimestamp } from 'src/shared/firebase-admin/firestore';
 import { Blog } from 'src/shared/models/blogs';
+import * as firebase from 'firebase-admin';
 
 @Injectable()
 export class BlogsService {
@@ -14,6 +15,38 @@ export class BlogsService {
   }
 
   async addLikeBlog(blogId: string, userId: string) {
+    database.ref('.info/connected').on('value', function (snapshot) {
+      // If we're not currently connected, don't do anything.
+      if (snapshot.val() == false) {
+        return;
+      }
+
+      // If we are currently connected, then use the 'onDisconnect()'
+      // method to add a set which will only trigger once this
+      // client has disconnected by closing the app,
+      // losing internet, or any other means.
+      database
+        .ref('test')
+        .onDisconnect()
+        .set({
+          state: 'offline',
+          last_changed: firebase.database.ServerValue.TIMESTAMP,
+        })
+        .then(function () {
+          // The promise returned from .onDisconnect().set() will
+          // resolve as soon as the server acknowledges the onDisconnect()
+          // request, NOT once we've actually disconnected:
+          // https://firebase.google.com/docs/reference/js/firebase.database.OnDisconnect
+
+          // We can now safely set ourselves as 'online' knowing that the
+          // server will mark us as offline once we lose connection.
+          database.ref('test').set({
+            state: 'online',
+            last_changed: firebase.database.ServerValue.TIMESTAMP,
+          });
+        });
+    });
+
     const doc = await db.collection('blogs').doc(blogId).get();
 
     const prevLikes: string[] = doc.data().likes;
