@@ -7,9 +7,18 @@ export class BlogsController {
   constructor(private blogsService: BlogsService) {}
 
   @Post()
-  async createBlog(@Body() blogDTO: BlogDTO) {
-    this.blogsService.createBlog(blogDTO);
-    return blogDTO;
+  async createBlog(@Body() body: BlogDTO) {
+    const { title, content } = body;
+    this.blogsService.createBlog({ title, content, likes: [] });
+
+    return { title, content };
+  }
+
+  @Post(':blogId')
+  async addLikeBlog(@Param('blogId') blogId: string, @Body() body) {
+    const { userId } = body;
+
+    return this.blogsService.addLikeBlog(blogId, userId);
   }
 
   @Get()
