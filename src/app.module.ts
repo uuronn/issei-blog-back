@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { BlogsModule } from './blogs/blogs.module';
 import { UsersModule } from './users/users.module';
 import { LikesModule } from './likes/likes.module';
+import { AuthMiddleware } from './middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { LikesModule } from './likes/likes.module';
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply().forRoutes('*');
+    consumer.apply(AuthMiddleware).forRoutes('/blogs', '/users');
   }
 }
