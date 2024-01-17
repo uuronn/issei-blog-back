@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import { cert, initializeApp, ServiceAccount } from 'firebase-admin/app';
 import { Firestore, getFirestore } from 'firebase-admin/firestore';
 import { ValidationPipe } from '@nestjs/common';
-import { AuthInterceptor } from './app.interceptor';
 
 let db: Firestore;
 let AUTHORIZATION_KEY: string;
@@ -13,7 +12,6 @@ let OWNER_EMAIL: string;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new AuthInterceptor());
 
   app.enableCors({
     origin: '*',
