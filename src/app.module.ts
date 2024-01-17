@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { BlogsModule } from './blogs/blogs.module';
 import { UsersModule } from './users/users.module';
-import { LikesModule } from './likes/likes.module';
 import { AuthMiddleware } from './middleware/auth.middleware';
 
 @Module({
@@ -14,7 +13,6 @@ import { AuthMiddleware } from './middleware/auth.middleware';
     }),
     BlogsModule,
     UsersModule,
-    LikesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
