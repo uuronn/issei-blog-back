@@ -4,8 +4,10 @@ import { ConfigService } from '@nestjs/config';
 import { cert, initializeApp, ServiceAccount } from 'firebase-admin/app';
 import { Firestore, getFirestore } from 'firebase-admin/firestore';
 import { ValidationPipe } from '@nestjs/common';
+import { Database, getDatabase } from 'firebase-admin/database';
 
 let db: Firestore;
+let database: Database;
 let AUTHORIZATION_KEY: string;
 let OWNER_EMAIL: string;
 
@@ -33,9 +35,12 @@ async function bootstrap() {
 
   initializeApp({
     credential: cert(adminConfig),
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
   });
 
   db = getFirestore();
+
+  database = getDatabase();
 
   await app.listen(8000);
 
@@ -44,4 +49,4 @@ async function bootstrap() {
 
 bootstrap();
 
-export { db, AUTHORIZATION_KEY, OWNER_EMAIL };
+export { db, database, AUTHORIZATION_KEY, OWNER_EMAIL };
