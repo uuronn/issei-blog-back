@@ -13,6 +13,22 @@ export class BlogsService {
     await db.collection('blogs').add({ ...blog, createdAt: at } as Blog);
   }
 
+  async addLikeBlog(blogId: string, userId: string) {
+    const doc = await db.collection('blogs').doc(blogId).get();
+
+    const prevLikes: string[] = doc.data().likes;
+
+    const newLikes = [...prevLikes, userId];
+
+    await db.collection('blogs').doc(blogId).update({ likes: newLikes });
+
+    const newDoc = await db.collection('blogs').doc(blogId).get();
+
+    const count = newDoc.data().likes.length;
+
+    return count;
+  }
+
   async getBlog(blogId: string) {
     const doc = await db.collection('blogs').doc(blogId).get();
 
