@@ -16,9 +16,9 @@ export class UserService {
     return this.usersRepository.find();
   }
 
-  findOne(id: number): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
-  }
+  // findOne(id: number): Promise<User | null> {
+  //   return this.usersRepository.findOneBy({ id });
+  // }
 
   async create({ id, firstName, lastName, isActive }: User): Promise<User | void> {
     console.log('aa', UUID);

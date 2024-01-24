@@ -1,5 +1,6 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
+import { v4 as uuid } from 'uuid';
 
 @Controller('user')
 export class UserController {
@@ -14,6 +15,6 @@ export class UserController {
 
   @Post()
   create() {
-    this.userService.create({ id: 12, firstName: 'よし', lastName: 'たか', isActive: false });
+    this.userService.create({ id: uuid(), firstName: 'よし', lastName: 'たか', isActive: false });
   }
 }
