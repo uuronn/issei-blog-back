@@ -11,9 +11,9 @@ export class BlogService {
   ) {}
 
   async createBlog(body: Blog) {
-    const { id, title, content } = body;
+    const { id, title, content, createdAt } = body;
 
-    const res = this.blogRepository.create({ id, title, content });
+    const res = this.blogRepository.create({ id, title, content, createdAt });
 
     await this.blogRepository.save(res);
 

@@ -12,7 +12,12 @@ export class BlogController {
   async createBlog(@Body() body: Blog) {
     const { title, content } = body;
 
-    this.blogService.createBlog({ id: uuid(), title, content });
+    this.blogService.createBlog({
+      id: uuid(),
+      title,
+      content,
+      createdAt: new Date().toISOString(),
+    });
 
     return { title, content };
   }
