@@ -5,7 +5,6 @@ import { cert, initializeApp, ServiceAccount } from 'firebase-admin/app';
 import { Firestore, getFirestore } from 'firebase-admin/firestore';
 import { ValidationPipe } from '@nestjs/common';
 import { Database, getDatabase } from 'firebase-admin/database';
-import * as firebase from 'firebase-admin';
 import { ExpressAdapter } from '@nestjs/platform-express';
 
 let db: Firestore;
@@ -45,53 +44,6 @@ async function bootstrap() {
   db = getFirestore();
 
   database = getDatabase();
-
-  database.ref('.info/connected').on('value', function (snapshot) {
-    // If we're not currently connected, don't do anything.
-    if (snapshot.val() == false) {
-      firebase
-        .firestore()
-        .doc('/status/' + 'uid')
-        .set({
-          state: 'offline',
-          last_changed: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-
-      return;
-    }
-
-    // If we are currently connected, then use the 'onDisconnect()'
-    // method to add a set which will only trigger once this
-    // client has disconnected by closing the app,
-    // losing internet, or any other means.
-    database
-      .ref('test')
-      .onDisconnect()
-      .set({
-        state: 'offline',
-        last_changed: firebase.database.ServerValue.TIMESTAMP,
-      })
-      .then(function () {
-        // The promise returned from .onDisconnect().set() will
-        // resolve as soon as the server acknowledges the onDisconnect()
-        // request, NOT once we've actually disconnected:
-        // https://firebase.google.com/docs/reference/js/firebase.database.OnDisconnect
-
-        // We can now safely set ourselves as 'online' knowing that the
-        // server will mark us as offline once we lose connection.
-        database.ref('test').set({
-          state: 'online',
-          last_changed: firebase.database.ServerValue.TIMESTAMP,
-        });
-
-        const userStatusFirestoreRef = firebase.firestore().doc('/status/' + 'uid');
-
-        userStatusFirestoreRef.set({
-          state: 'online',
-          last_changed: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-      });
-  });
 
   await app.listen(8000);
 
