@@ -10,6 +10,10 @@ export class BlogService {
     private blogRepository: Repository<Blog>,
   ) {}
 
+  getBlogs(): Promise<Blog[] | null> {
+    return this.blogRepository.find();
+  }
+
   async createBlog(body: Blog) {
     const { id, title, content, createdAt } = body;
 
