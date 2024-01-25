@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 import { BlogService } from './blog.service';
 import { Blog } from './blog.entity';
@@ -11,6 +11,11 @@ export class BlogController {
   @Get()
   async getBlogs() {
     return await this.blogService.getBlogs();
+  }
+
+  @Get(':blogId')
+  async getBlog(@Param('blogId') blogId: string) {
+    return await this.blogService.getBlog(blogId);
   }
 
   @Post()

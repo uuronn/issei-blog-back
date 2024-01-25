@@ -14,6 +14,10 @@ export class BlogService {
     return this.blogRepository.find();
   }
 
+  getBlog(id: string): Promise<Blog | null> {
+    return this.blogRepository.findOneBy({ id });
+  }
+
   async createBlog(body: Blog) {
     const { id, title, content, createdAt } = body;
 
