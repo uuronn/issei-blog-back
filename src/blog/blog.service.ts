@@ -25,8 +25,6 @@ export class BlogService {
 
     await this.blogRepository.save(res);
 
-    console.log('res', res);
-
     return;
   }
 }

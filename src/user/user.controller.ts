@@ -9,12 +9,11 @@ export class UserController {
   @Get()
   async findAll() {
     const res = await this.userService.findAll();
-    console.log('res', res);
     return res;
   }
 
   @Post()
   create() {
-    this.userService.create({ id: uuid(), firstName: 'よし', lastName: 'たか', isActive: false });
+    this.userService.create({ id: uuid(), name: 'よし', password: 'たか', email: '' });
   }
 }

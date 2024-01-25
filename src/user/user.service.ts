@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Injectable()
 export class UserService {
@@ -12,22 +11,14 @@ export class UserService {
   ) {}
 
   findAll(): Promise<User[]> {
-    console.log('this', this.usersRepository.find());
     return this.usersRepository.find();
   }
 
-  // findOne(id: number): Promise<User | null> {
-  //   return this.usersRepository.findOneBy({ id });
-  // }
-
-  async create({ id, firstName, lastName, isActive }: User): Promise<User | void> {
-    console.log('aa', UUID);
-
-    const res = this.usersRepository.create({ id, firstName, lastName, isActive });
+  async create({ id, name, password, email }: User): Promise<User | void> {
+    const res = this.usersRepository.create({ id, name, password, email });
 
     await this.usersRepository.save(res);
 
-    console.log('res', res);
     return;
   }
 

@@ -2,12 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { BlogsModule } from './blogs/blogs.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { User } from './user/user.entity';
 import { UserModule } from './user/user.module';
-import { HelthCheckController } from './helthCheck/helthCheck.controller';
 import { HelthCheckModule } from './helthCheck/helthCheck.module';
 import { BlogModule } from './blog/blog.module';
 import { Blog } from './blog/blog.entity';
@@ -27,12 +25,11 @@ import { Blog } from './blog/blog.entity';
       entities: [User, Blog],
       synchronize: true,
     }),
-    BlogsModule,
     UserModule,
     HelthCheckModule,
     BlogModule,
   ],
-  controllers: [AppController, HelthCheckController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
