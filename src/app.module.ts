@@ -9,6 +9,8 @@ import { UserModule } from './user/user.module';
 import { HelthCheckModule } from './helthCheck/helthCheck.module';
 import { BlogModule } from './blog/blog.module';
 import { Blog } from './blog/blog.entity';
+import { LikeModule } from './like/like.module';
+import { Like } from './like/like.entity';
 
 @Module({
   imports: [
@@ -22,12 +24,13 @@ import { Blog } from './blog/blog.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Blog],
+      entities: [User, Blog, Like],
       synchronize: true,
     }),
     UserModule,
     HelthCheckModule,
     BlogModule,
+    LikeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
