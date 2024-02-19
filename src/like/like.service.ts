@@ -14,14 +14,14 @@ export class LikeService {
   //   return this.blogRepository.find();
   // }
 
-  // getBlog(id: string): Promise<Blog | null> {
-  //   return this.blogRepository.findOneBy({ id });
-  // }
+  getLike(blogId: string): Promise<Like | null> {
+    return this.likeRepository.findOneBy({ blogId });
+  }
 
   async addLike(body: Like) {
-    const { blogId, userIp } = body;
+    const { blogId, userAgent } = body;
 
-    const res = this.likeRepository.create({ blogId, userIp });
+    const res = this.likeRepository.create({ blogId, userAgent });
 
     await this.likeRepository.save(res);
 

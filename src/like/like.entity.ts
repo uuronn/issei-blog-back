@@ -9,5 +9,5 @@ export class Like {
   blogId: string;
 
   @Column()
-  userIp: string;
+  userAgent: string;
 }

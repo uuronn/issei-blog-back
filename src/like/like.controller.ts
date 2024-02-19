@@ -1,5 +1,7 @@
 import {
   Controller,
+  Get,
+  Param,
   // Get,
   // Param,
   Post,
@@ -21,14 +23,14 @@ export class LikeController {
   //   return await this.likeService.getBlogs();
   // }
 
-  // @Get(':blogId')
-  // async getBlog(@Param('blogId') blogId: string) {
-  //   return await this.blogService.getBlog(blogId);
-  // }
+  @Get(':blogId')
+  async getLike(@Param('blogId') blogId: string) {
+    return await this.likeService.getLike(blogId);
+  }
 
   @Post()
   async addLike(@Req() req: Request) {
-    const { blogId, userIp, id } = req.body as Like;
+    const { blogId, id } = req.body as Like;
 
     const userAgent = req.headers['user-agent'];
 
@@ -37,7 +39,7 @@ export class LikeController {
     this.likeService.addLike({
       id,
       blogId,
-      userIp,
+      userAgent,
     });
 
     // return { title, content };
