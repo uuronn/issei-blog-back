@@ -11,9 +11,9 @@ async function bootstrap() {
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, User-Agent',
   });
 
-  await app.listen(8000);
+  await app.listen(8080);
 
-  console.log('http://localhost:8000');
+  console.log('http://localhost:8080');
 }
 
 bootstrap();
